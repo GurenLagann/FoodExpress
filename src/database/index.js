@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import mongoose from 'mongoose';
 
 import User from '../app/models/User';
 import File from '../app/models/File';
@@ -11,6 +12,7 @@ const models = [User, File, Appointment];
 class Database {
     constructor() {
         this.init();
+        this.mongo();
     }
 
     init() {
@@ -22,6 +24,13 @@ class Database {
                 model =>
                     model.associate && model.associate(this.connection.models)
             );
+    }
+
+    mongo() {
+        this.mongoConnection = mongoose.connect(
+            'mongodb://localhost:27017/FoodExpress',
+            { useNewUrlParser: true, useFindAndModify: true }
+        );
     }
 }
 
